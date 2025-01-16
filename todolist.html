@@ -1,0 +1,116 @@
+<html>
+  <h1>To-Do List</h1>
+  <body>
+    <p id="title">Here is a To-Do List</p>
+
+    <button id="Add">Add</button>
+
+    <div id="addpig">
+      <input id="todo-input" />
+      <button id="done">Done</button>
+    </div>
+
+    <div id="todo-list"></div>
+  </body>
+</html>
+
+<style>
+  h1 {
+    color: rgb(226, 43, 113);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  #title {
+    color: rgb(226, 43, 113);
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  #todo-input {
+    width: 200px;
+    height: 36px;
+    border-radius: 6px;
+  }
+  #todo-list {
+    width: 400px;
+    min-height: 100px;
+    border: 1px solid #ccc;
+  }
+  #addpig {
+    display: none;
+  }
+  .todo-list-items {
+    color: purple;
+  }
+</style>
+
+<script>
+  const addbutton = document.getElementById('Add');
+  const addpig = document.getElementById('addpig');
+  const done = document.getElementById('done');
+  const todoinput = document.getElementById('todo-input');
+  const todolist = document.getElementById('todo-list');
+
+  addbutton.onclick = function () {
+    console.log('addbuttonclicked');
+    addpig.style.display = 'block';
+    done.style.backgroundColor = 'yellow';
+  };
+
+  done.onclick = function () {
+    let curLines = todolist.children.length;
+    let newListItem = document.createElement('div');
+    let newListItemIndex = document.createElement('span');
+    let newListItemText = document.createElement('span');
+    let newListItemInput = document.createElement('input');
+    let newListItemEditButton = document.createElement('button');
+    let newListItemDeleteButton = document.createElement('button');
+
+    let index = curLines + 1;
+
+    newListItem.setAttribute('id', 'todo-list-item-' + index);
+    newListItem.setAttribute('class', 'todo-list-items');
+
+    newListItemIndex.innerText = index;
+    newListItemIndex.setAttribute('id', 'todo-list-item-index-' + index);
+    newListItemText.innerText = '. ' + todoinput.value;
+    newListItemDeleteButton.innerText = 'Del';
+    newListItemEditButton.innerText = 'Edit';
+    newListItemInput.style.display = 'none';
+
+    newListItem.appendChild(newListItemIndex);
+    newListItem.appendChild(newListItemText);
+    newListItem.appendChild(newListItemInput);
+    newListItem.appendChild(newListItemEditButton);
+    newListItem.appendChild(newListItemDeleteButton);
+
+    todolist.appendChild(newListItem);
+    addpig.style.display = 'none';
+    todoinput.value = '';
+
+    newListItemDeleteButton.onclick = function () {
+      todolist.removeChild(newListItem);
+
+      for (let i = 0; i < todolist.children.length; i++) {
+        let curIndex = todolist.children[i].children[0];
+        curIndex.setAttribute('id', i + 1);
+        curIndex.innerText = i + 1;
+      }
+    };
+
+    newListItemEditButton.onclick = function () {
+      if (newListItemEditButton.innerText === 'Edit') {
+        newListItemInput.value = newListItemText.innerText;
+        newListItemText.style.display = 'none';
+        newListItemInput.style.display = 'inline-block';
+        newListItemEditButton.innerText = 'Enter';
+      } else {
+        newListItemText.innerText = newListItemInput.value;
+        newListItemInput.style.display = 'none';
+        newListItemText.style.display = 'inline-block';
+      }
+    };
+  };
+
+  // const buttons = document.getElementsByClassName('button');
+  // const calculator_screen = document.getElementById('calculator_screen');
+  // const signs = ['+', '-', 'x', '÷', '=', '.', 'AC'];
+</script>

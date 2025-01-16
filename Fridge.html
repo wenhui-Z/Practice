@@ -1,0 +1,187 @@
+<html>
+  <body>
+    <head>
+      <h1>This is a fridge</h1>
+
+      <div id="page">
+        <div id="fridge">
+          <div id="top">
+            <div id="tophandle"></div>
+
+            <div id="opened_top"></div>
+          </div>
+
+          <div id="bottom">
+            <div id="bottomhandle"></div>
+            <div id="opened_bottom"></div>
+          </div>
+        </div>
+
+        <div>
+          <input id="input" style="margin-left: 200px" />
+          <button id="enter">Enter</button>
+
+          <div id="controller">
+            <div id="threeinarow">
+              <select id="food_list">
+                <option>egg</option>
+                <option>cabbage</option>
+                <option>milk</option>
+              </select>
+
+              <div>
+                <input id="quantity" />
+              </div>
+
+              <div>
+                <button id="addbutton">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </head>
+  </body>
+</html>
+
+<style>
+  #page {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  #fridge {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    padding: 5px;
+    border: 3px solid grey;
+  }
+
+  #top {
+    width: 100%;
+    height: 350px;
+    border-radius: 5px;
+    border: 1px solid green;
+    margin-bottom: 10px;
+  }
+
+  #opened_top {
+    position: absolute;
+    left: 310px;
+    top: 0;
+    width: 60px;
+    height: 350px;
+    border: 1px solid green;
+    display: none;
+    cursor: pointer;
+  }
+
+  #bottom {
+    width: 100%;
+    height: 235px;
+    border-radius: 5px;
+    border: 1px solid blueviolet;
+  }
+  #opened_bottom {
+    position: absolute;
+    left: 310px;
+    top: 365;
+    width: 60px;
+    height: 240px;
+    border: 1px solid blueviolet;
+    display: none;
+    cursor: pointer;
+  }
+  #tophandle {
+    width: 8%;
+    height: 50%;
+    border-radius: 5px;
+    border: 1px solid green;
+    margin-top: 25%;
+    margin-bottom: 25%;
+    margin-left: 5%;
+    margin-right: 87%;
+    cursor: pointer;
+  }
+  #bottomhandle {
+    width: 8%;
+    height: 50%;
+    border-radius: 5px;
+    border: 1px solid blueviolet;
+    margin-top: 25%;
+    margin-bottom: 25%;
+    margin-left: 5%;
+    margin-right: 87%;
+    cursor: pointer;
+  }
+  #controller {
+    width: 300px;
+    height: 500px;
+    margin-left: 200px;
+    border: 1px solid black;
+    border-radius: 6px;
+  }
+  #food_list {
+    position: relative;
+    height: 20px;
+    margin-top: 1px;
+  }
+
+  #quantity {
+    position: relative;
+    height: 20px;
+    width: 30px;
+  }
+
+  #addbutton {
+    position: relative;
+  }
+
+  #threeinarow {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+</style>
+
+<script>
+  const tophandle = document.getElementById('tophandle');
+  const opened_top = document.getElementById('opened_top');
+  const bottomhandle = document.getElementById('bottomhandle');
+  const opened_bottom = document.getElementById('opened_bottom');
+
+  const input = document.getElementById('input');
+  const enter = document.getElementById('enter');
+  const food_list = document.getElementById('food_list');
+  const quantity = document.getElementById('quantity');
+  const addbutton = document.getElementById('addbutton');
+
+  tophandle.onclick = function () {
+    tophandle.style.display = 'none';
+    opened_top.style.display = 'block';
+  };
+
+  bottomhandle.onclick = function () {
+    bottomhandle.style.display = 'none';
+    opened_bottom.style.display = 'block';
+  };
+
+  opened_top.onclick = function () {
+    tophandle.style.display = 'block';
+    opened_top.style.display = 'none';
+  };
+  opened_bottom.onclick = function () {
+    bottomhandle.style.display = 'block';
+    opened_bottom.style.display = 'none';
+  };
+
+  enter.onclick = function () {
+    let option = document.createElement('option');
+    food_list.appendChild(option);
+    option.innerText = input.value;
+    input.value = ' ';
+  };
+
+  addbutton.onclick = function () {};
+</script>
