@@ -89,7 +89,7 @@
     newListItemDeleteButton.onclick = function () {
       todolist.removeChild(newListItem);
 
-      for (let i = 0; i < todolist.children.length; i++) {
+       (let i = 0; i < todolist.children.length; i++) {
         let curIndex = todolist.children[i].children[0];
         curIndex.setAttribute('id', i + 1);
         curIndex.innerText = i + 1;

@@ -6,13 +6,63 @@
       <div id="page">
         <div id="fridge">
           <div id="top">
+            <div id="topgrid">
+              <div id="topcontainers">
+                <div class="topcontainer">
+                  <div class="toptext"></div>
+                  <button class="toptakebutton">Take</button>
+                </div>
+                <div class="topcontainer">
+                  <div class="toptext"></div>
+                  <button class="toptakebutton">Take</button>
+                </div>
+                <div class="topcontainer">
+                  <div class="toptext"></div>
+                  <button class="toptakebutton">Take</button>
+                </div>
+                <div class="topcontainer">
+                  <div class="toptext"></div>
+                  <button class="toptakebutton">Take</button>
+                </div>
+                <div class="topcontainer">
+                  <div class="toptext"></div>
+                  <button class="toptakebutton">Take</button>
+                </div>
+                <div class="topcontainer">
+                  <div class="toptext"></div>
+                  <button class="toptakebutton">Take</button>
+                </div>
+              </div>
+            </div>
             <div id="tophandle"></div>
 
             <div id="opened_top"></div>
           </div>
 
           <div id="bottom">
+            <div id="bottomgrid">
+              <div id="bottomcontainers">
+                <div class="bottomcontainer">
+                  <div class="bottomtext"></div>
+                  <button class="bottomtakebutton">Take</button>
+                </div>
+                <div class="bottomcontainer">
+                  <div class="bottomtext"></div>
+                  <button class="bottomtakebutton">Take</button>
+                </div>
+                <div class="bottomcontainer">
+                  <div class="bottomtext"></div>
+                  <button class="bottomtakebutton">Take</button>
+                </div>
+                <div class="bottomcontainer">
+                  <div class="bottomtext"></div>
+                  <button class="bottomtakebutton">Take</button>
+                </div>
+              </div>
+            </div>
+
             <div id="bottomhandle"></div>
+
             <div id="opened_bottom"></div>
           </div>
         </div>
@@ -23,12 +73,17 @@
 
           <div id="controller">
             <div id="threeinarow">
+              <div>Foodlist</div>
               <select id="food_list">
-                <option>egg</option>
-                <option>cabbage</option>
-                <option>milk</option>
+                <option value=""></option>
+                <option value="egg">egg</option>
+                <option value="tofu">tofu</option>
+                <option value="juice">juice</option>
+                <option value="milk">milk</option>
+                <option value="pork">pork</option>
+                <option value="iceCream">iceCream</option>
               </select>
-
+              <div>Number</div>
               <div>
                 <input id="quantity" />
               </div>
@@ -37,6 +92,12 @@
                 <button id="addbutton">Add</button>
               </div>
             </div>
+            <div style="display: flex">
+              <div>Take#</div>
+              <input id="takeinput" />
+            </div>
+
+            <div id="selectedoption"></div>
           </div>
         </div>
       </div>
@@ -59,11 +120,41 @@
   }
 
   #top {
+    position: relative;
     width: 100%;
     height: 350px;
     border-radius: 5px;
     border: 1px solid green;
     margin-bottom: 10px;
+  }
+
+  #topgrid {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: none;
+  }
+  #topcontainers {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 5px;
+  }
+  .topcontainer {
+    border: 1px solid rgb(4, 93, 20);
+    border-radius: 3px;
+    height: 80%;
+    width: 70%;
+    padding: 10px;
+  }
+  #tophandle {
+    position: absolute;
+    width: 8%;
+    height: 50%;
+    border-radius: 5px;
+    border: 1px solid green;
+    top: 25%;
+    left: 5%;
+    cursor: pointer;
   }
 
   #opened_top {
@@ -78,45 +169,55 @@
   }
 
   #bottom {
+    position: relative;
     width: 100%;
     height: 235px;
     border-radius: 5px;
     border: 1px solid blueviolet;
   }
+
+  #bottomgrid {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: none;
+  }
+  #bottomcontainers {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 5px;
+  }
+
+  .bottomcontainer {
+    border: 1px solid blueviolet;
+    border-radius: 3px;
+    height: 80%;
+    width: 70%;
+    padding: 10px;
+  }
   #opened_bottom {
     position: absolute;
     left: 310px;
-    top: 365;
+
     width: 60px;
     height: 240px;
     border: 1px solid blueviolet;
     display: none;
     cursor: pointer;
   }
-  #tophandle {
-    width: 8%;
-    height: 50%;
-    border-radius: 5px;
-    border: 1px solid green;
-    margin-top: 25%;
-    margin-bottom: 25%;
-    margin-left: 5%;
-    margin-right: 87%;
-    cursor: pointer;
-  }
+
   #bottomhandle {
+    position: absolute;
     width: 8%;
     height: 50%;
     border-radius: 5px;
     border: 1px solid blueviolet;
-    margin-top: 25%;
-    margin-bottom: 25%;
-    margin-left: 5%;
-    margin-right: 87%;
+    top: 25%;
+    left: 5%;
     cursor: pointer;
   }
   #controller {
-    width: 300px;
+    width: 320px;
     height: 500px;
     margin-left: 200px;
     border: 1px solid black;
@@ -140,8 +241,16 @@
 
   #threeinarow {
     display: flex;
+
+    justify-content: space-between;
     flex-direction: row;
     gap: 12px;
+  }
+  .toptakebutton {
+    display: none;
+  }
+  .bottomtakebutton {
+    display: none;
   }
 </style>
 
@@ -156,24 +265,55 @@
   const food_list = document.getElementById('food_list');
   const quantity = document.getElementById('quantity');
   const addbutton = document.getElementById('addbutton');
+  const topgrid = document.getElementById('topgrid');
+  const bottomgrid = document.getElementById('bottomgrid');
+  const selectedoption = document.getElementById('selectedoption');
+  const topcontainers = document.getElementsByClassName('topcontainer');
+  const bottomcontainers = document.getElementsByClassName('bottomcontainer');
+  const toptext = document.getElementsByClassName('toptext');
+  const bottomtext = document.getElementsByClassName('bottomtext');
+  const toptakebutton = document.getElementsByClassName('toptakebutton');
+  const bottomtakebutton = document.getElementsByClassName('bottomtakebutton');
+  const takeinput = document.getElementById('takeinput');
+
+  const unitmap = {
+    egg: '',
+    tofu: 'box',
+    milk: 'ml',
+    juice: 'jar',
+    pork: 'g',
+    iceCream: 'cup',
+  };
+  const locationmap = {
+    egg: 'top',
+    tofu: 'top',
+    milk: 'top',
+    juice: 'top',
+    pork: 'bottom',
+    iceCream: 'bottom',
+  };
 
   tophandle.onclick = function () {
     tophandle.style.display = 'none';
     opened_top.style.display = 'block';
+    topgrid.style.display = 'grid';
   };
 
   bottomhandle.onclick = function () {
     bottomhandle.style.display = 'none';
     opened_bottom.style.display = 'block';
+    bottomgrid.style.display = 'grid';
   };
 
   opened_top.onclick = function () {
     tophandle.style.display = 'block';
     opened_top.style.display = 'none';
+    topgrid.style.display = 'none';
   };
   opened_bottom.onclick = function () {
     bottomhandle.style.display = 'block';
     opened_bottom.style.display = 'none';
+    bottomgrid.style.display = 'none';
   };
 
   enter.onclick = function () {
@@ -183,5 +323,102 @@
     input.value = ' ';
   };
 
-  addbutton.onclick = function () {};
+  addbutton.onclick = function () {
+    let num = Number(quantity.value);
+    if (isNaN(Number(quantity.value))) {
+      alert('Need to enter a number');
+    } else if (locationmap[food_list.value] === 'top') {
+      for (let i = 0; i < topcontainers.length; i++) {
+        if (toptext[i].innerText === '') {
+          toptext[i].innerText =
+            num + ' ' + unitmap[food_list.value] + ' ' + food_list.value;
+          toptakebutton[i].style.display = 'block';
+          toptakebutton[i].onclick = function () {
+            let temp = toptext[i].innerText.split(' ');
+            if (Number(temp[0]) < Number(takeinput.value)) {
+              alert('Not enough to take');
+            } else if (Number(temp[0]) === Number(takeinput.value)) {
+              toptakebutton[i].style.display = 'none';
+              toptext[i].innerText = '';
+            } else {
+              toptext[i].innerText =
+                Number(temp[0]) -
+                takeinput.value +
+                ' ' +
+                temp[1] +
+                ' ' +
+                temp[2];
+            }
+          };
+          break;
+        }
+        if (toptext[i].innerText.includes(food_list.value)) {
+          let a = toptext[i].innerText.split(' ')[0];
+
+          toptext[i].innerText =
+            Number(a) +
+            num +
+            ' ' +
+            unitmap[food_list.value] +
+            ' ' +
+            food_list.value;
+          // toptakebutton[i].style.display = 'block';
+          // toptakebutton[i].onclick = function () {
+          //   let temp = toptext[i].innerText.split(' ');
+          //   if (temp[0] < takeinput.value) {
+          //     alert('Not enough to take');
+          //   } else
+          //     toptext[i].innerText =
+          //       Number(temp[0]) -
+          //       takeinput.value +
+          //       ' ' +
+          //       temp[1] +
+          //       ' ' +
+          //       temp[2];
+          // };
+          break;
+        }
+      }
+    } else if (locationmap[food_list.value] === 'bottom') {
+      for (let i = 0; i < bottomcontainers.length; i++) {
+        if (bottomtext[i].innerText === '') {
+          bottomtext[i].innerText =
+            num + ' ' + unitmap[food_list.value] + ' ' + food_list.value;
+          bottomtakebutton[i].style.display = 'block';
+          bottomtakebutton[i].onclick = function () {
+            let temp = bottomtext[i].innerText.split(' ');
+            if (Number(temp[0]) < Number(takeinput.value)) {
+              alert('Not enough to take');
+            } else if (Number(temp[0]) === Number(takeinput.value)) {
+              bottomtakebutton[i].style.display = 'none';
+              bottomtext[i].innerText = '';
+            } else {
+              bottomtext[i].innerText =
+                Number(temp[0]) -
+                takeinput.value +
+                ' ' +
+                temp[1] +
+                ' ' +
+                temp[2];
+            }
+          };
+          break;
+        } else if (bottomtext[i].innerText.includes(food_list.value)) {
+          let a = toptext[i].innerText.split(' ')[0];
+
+          bottomtext[i].innerText =
+            Number(a) +
+            num +
+            ' ' +
+            unitmap[food_list.value] +
+            ' ' +
+            food_list.value;
+
+          break;
+        }
+      }
+    }
+    food_list.value = '';
+    quantity.value = '';
+  };
 </script>
