@@ -78,10 +78,15 @@
                 <option value=""></option>
                 <option value="egg">egg</option>
                 <option value="tofu">tofu</option>
-                <option value="juice">juice</option>
-                <option value="milk">milk</option>
                 <option value="pork">pork</option>
                 <option value="iceCream">iceCream</option>
+                <option value="tomato">tomato</option>
+                <option value="potato">potato</option>
+                <option value="pepper">pepper</option>
+                <option value="onion">onion</option>
+                <option value="beef">beef</option>
+                <option value="cilantro">cilantro</option>
+                <option value="fish">fish</option>
               </select>
               <div>Number</div>
               <div>
@@ -95,6 +100,22 @@
             <div style="display: flex">
               <div>Take#</div>
               <input id="takeinput" />
+            </div>
+            <div id="menu">
+              <div>
+                <div class="dishname">Fried tomato egg</div>
+                <div class="recipe">
+                  <img src="./pic/fried _tomatoegg .jpg" class="recipepic" />
+                  <div class="recipeitem">
+                    <div class="itemname">egg</div>
+                    <div class="itemcount">3</div>
+                  </div>
+                  <div class="recipeitem">
+                    <div class="itemname">tomato</div>
+                    <div class="itemcount">1</div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div id="selectedoption"></div>
@@ -252,6 +273,14 @@
   .bottomtakebutton {
     display: none;
   }
+
+  .recipepic {
+    width: 150px;
+  }
+  .recipeitem {
+    display: flex;
+    gap: 8px;
+  }
 </style>
 
 <script>
@@ -283,6 +312,13 @@
     juice: 'jar',
     pork: 'g',
     iceCream: 'cup',
+    tomato: '',
+    potato: '',
+    pepper: '',
+    onion: '',
+    cilantro: 'g',
+    beef: 'g',
+    fish: '',
   };
   const locationmap = {
     egg: 'top',
@@ -291,6 +327,13 @@
     juice: 'top',
     pork: 'bottom',
     iceCream: 'bottom',
+    tomato: 'top',
+    potato: 'top',
+    pepper: 'top',
+    onion: 'top',
+    cilantro: 'top',
+    beef: 'bottom',
+    fish: 'bottom',
   };
 
   tophandle.onclick = function () {
@@ -341,13 +384,18 @@
               toptakebutton[i].style.display = 'none';
               toptext[i].innerText = '';
             } else {
-              toptext[i].innerText =
-                Number(temp[0]) -
-                takeinput.value +
-                ' ' +
-                temp[1] +
-                ' ' +
-                temp[2];
+              if (temp.length === 3) {
+                toptext[i].innerText =
+                  Number(temp[0]) -
+                  takeinput.value +
+                  ' ' +
+                  temp[1] +
+                  ' ' +
+                  temp[2];
+              } else {
+                toptext[i].innerText =
+                  Number(temp[0]) - takeinput.value + ' ' + temp[1];
+              }
             }
           };
           break;
@@ -362,20 +410,7 @@
             unitmap[food_list.value] +
             ' ' +
             food_list.value;
-          // toptakebutton[i].style.display = 'block';
-          // toptakebutton[i].onclick = function () {
-          //   let temp = toptext[i].innerText.split(' ');
-          //   if (temp[0] < takeinput.value) {
-          //     alert('Not enough to take');
-          //   } else
-          //     toptext[i].innerText =
-          //       Number(temp[0]) -
-          //       takeinput.value +
-          //       ' ' +
-          //       temp[1] +
-          //       ' ' +
-          //       temp[2];
-          // };
+
           break;
         }
       }
@@ -393,13 +428,15 @@
               bottomtakebutton[i].style.display = 'none';
               bottomtext[i].innerText = '';
             } else {
-              bottomtext[i].innerText =
-                Number(temp[0]) -
-                takeinput.value +
-                ' ' +
-                temp[1] +
-                ' ' +
-                temp[2];
+              temp[0] = Number(temp[0]) - takeinput.value;
+              bottomtext[i].innerText = temp.join(' ');
+              // bottomtext[i].innerText =
+              //   Number(temp[0]) -
+              //   takeinput.value +
+              //   ' ' +
+              //   temp[1] +
+              //   ' ' +
+              //   temp[2];
             }
           };
           break;
