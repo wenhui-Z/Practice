@@ -87,6 +87,7 @@
                 <option value="beef">beef</option>
                 <option value="cilantro">cilantro</option>
                 <option value="fish">fish</option>
+                <option value="eggplant">eggplant</option>
               </select>
               <div>Number</div>
               <div>
@@ -102,8 +103,9 @@
               <input id="takeinput" />
             </div>
             <div id="menu">
-              <div>
-                <div class="dishname">Fried tomato egg</div>
+              <div class="menuitem">
+                <div class="dish">Fried tomato egg</div>
+                <button class="cookbutton">Cook</button>
                 <div class="recipe">
                   <img src="./pic/fried _tomatoegg .jpg" class="recipepic" />
                   <div class="recipeitem">
@@ -116,10 +118,93 @@
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div id="selectedoption"></div>
+              <div class="menuitem">
+                <div class="dish">Fried tofu fish</div>
+                <button class="cookbutton">Cook</button>
+                <div class="recipe">
+                  <img src="pic/fried_tofufish.jpg" class="recipepic" />
+                  <div class="recipeitem">
+                    <div class="itemname">tofu</div>
+                    <div class="itemcount">1</div>
+                  </div>
+                  <div class="recipeitem">
+                    <div class="itemname">fish</div>
+                    <div class="itemcount">1</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="menuitem">
+                <div class="dish">Fried cilantro beef</div>
+                <button class="cookbutton">Cook</button>
+                <div class="recipe">
+                  <img src="./pic/fried_cilantrobeef.jpeg" class="recipepic" />
+                  <div class="recipeitem">
+                    <div class="itemname">beef</div>
+                    <div class="itemcount">300</div>
+                  </div>
+                  <div class="recipeitem">
+                    <div class="itemname">cilantro</div>
+                    <div class="itemcount">50</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="menuitem">
+                <div class="dish">Fried pepper pork</div>
+                <button class="cookbutton">Cook</button>
+                <div class="recipe">
+                  <img src="pic/fried _pepperpork.jpg" class="recipepic" />
+                  <div class="recipeitem">
+                    <div class="itemname">pork</div>
+                    <div class="itemcount">250</div>
+                  </div>
+                  <div class="recipeitem">
+                    <div class="itemname">pepper</div>
+                    <div class="itemcount">3</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="menuitem">
+                <div class="dish">three brothers</div>
+                <button class="cookbutton">Cook</button>
+                <div class="recipe">
+                  <img src="pic/fried _threebrothers.jpg" class="recipepic" />
+                  <div class="recipeitem">
+                    <div class="itemname">potato</div>
+                    <div class="itemcount">1</div>
+                  </div>
+                  <div class="recipeitem">
+                    <div class="itemname">pepper</div>
+                    <div class="itemcount">2</div>
+                  </div>
+                  <div class="recipeitem">
+                    <div class="itemname">eggplant</div>
+                    <div class="itemcount">1</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="menuitem">
+                <div class="dish">onion beef</div>
+                <button class="cookbutton">Cook</button>
+                <div class="recipe">
+                  <img src="pic/fried_onionbeef.jpg" class="recipepic" />
+                  <div class="recipeitem">
+                    <div class="itemname">onion</div>
+                    <div class="itemcount">1</div>
+                  </div>
+                  <div class="recipeitem">
+                    <div class="itemname">beef</div>
+                    <div class="itemcount">300</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <div id="selectedoption"></div>
         </div>
       </div>
     </head>
@@ -238,8 +323,8 @@
     cursor: pointer;
   }
   #controller {
-    width: 320px;
-    height: 500px;
+    width: 350px;
+    height: 650px;
     margin-left: 200px;
     border: 1px solid black;
     border-radius: 6px;
@@ -276,14 +361,30 @@
 
   .recipepic {
     width: 150px;
+    height: 110px;
   }
   .recipeitem {
     display: flex;
     gap: 8px;
   }
+
+  #menu {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  .dish {
+    padding-top: 20px;
+    display: inline-block;
+  }
+  .cookbutton {
+    padding: 2px;
+    display: inline-block;
+  }
 </style>
 
 <script>
+  let inventory = {};
   const tophandle = document.getElementById('tophandle');
   const opened_top = document.getElementById('opened_top');
   const bottomhandle = document.getElementById('bottomhandle');
@@ -305,6 +406,11 @@
   const bottomtakebutton = document.getElementsByClassName('bottomtakebutton');
   const takeinput = document.getElementById('takeinput');
 
+  const cookbutton = document.getElementsByClassName('cookbutton');
+  const menuitem = document.getElementsByClassName('menuitem');
+  const recipeitem = document.getElementsByClassName('recipeitem');
+  const recipe = document.getElementsByClassName('recipe');
+
   const unitmap = {
     egg: '',
     tofu: 'box',
@@ -319,6 +425,7 @@
     cilantro: 'g',
     beef: 'g',
     fish: '',
+    eggplant: '',
   };
   const locationmap = {
     egg: 'top',
@@ -334,6 +441,7 @@
     cilantro: 'top',
     beef: 'bottom',
     fish: 'bottom',
+    eggplant: 'top',
   };
 
   tophandle.onclick = function () {
@@ -458,4 +566,101 @@
     food_list.value = '';
     quantity.value = '';
   };
+
+  function checkText(text) {
+    for (let i = 0; i < text.length; i++) {
+      let a = text[i].innerText.split(' ');
+      let name = a[a.length - 1];
+      if (!!name) {
+        inventory[name] = {
+          count: Number(a[0]),
+          location: locationmap[name],
+          unit: a.length === 3 ? a[1] : '',
+        };
+      }
+    }
+  }
+
+  //get current fridge's inventory
+  function getInventory() {
+    checkText(toptext);
+    checkText(bottomtext);
+  }
+
+  function clearFridge() {
+    for (let i = 0; i < toptext.length; i++) {
+      toptext[i].innerHTML = '';
+      toptakebutton[i].style.display = 'none';
+    }
+    for (let i = 0; i < bottomtext.length; i++) {
+      bottomtext[i].innerHTML = '';
+      bottomtakebutton[i].style.display = 'none';
+    }
+  }
+
+  function updateInventory() {
+    clearFridge();
+    let items = Object.keys(inventory);
+    let a = 0;
+    let b = 0;
+
+    for (let i = 0; i < items.length; i++) {
+      //when items are used up
+      if (inventory[items[i]].location === 'top') {
+        let temptop =
+          inventory[items[i]].unit === ''
+            ? [inventory[items[i]].count, items[i]]
+            : [inventory[items[i]].count, inventory[items[i]].unit, items[i]];
+        toptext[a].innerText = temptop.join(' ');
+        toptakebutton[a].style.display = 'block';
+        a++;
+      } else {
+        let tempbottom =
+          inventory[items[i]].unit === ''
+            ? [inventory[items[i]].count, items[i]]
+            : [inventory[items[i]].count, inventory[items[i]].unit, items[i]];
+        bottomtext[b].innerText = tempbottom.join(' ');
+        bottomtakebutton[b].style.display = 'block';
+        b++;
+      }
+    }
+  }
+
+  for (let i = 0; i < cookbutton.length; i++) {
+    cookbutton[i].onclick = function () {
+      const recipeitems = recipe[i].getElementsByClassName('recipeitem');
+      let obj = {};
+      for (let j = 0; j < recipeitems.length; j++) {
+        obj[recipeitems[j].children[0].innerText] = Number(
+          recipeitems[j].children[1].innerText
+        );
+      }
+      // we should check fridge inventory now
+      getInventory();
+      // now we should compare recipe's item with inventory
+      let canCook = true;
+      let keys = Object.keys(obj);
+      for (let j = 0; j < keys.length; j++) {
+        let item = keys[j];
+        if (!inventory[item]) {
+          alert(`不好意思，冰箱里没有${item}`);
+          canCook = false;
+        } else if (inventory[item].count < obj[item]) {
+          alert(`亲，还需要${obj[item] - inventory[item].count}个${item}哦～`);
+          canCook = false;
+        }
+      }
+      // after check all recipe ingredient and all good, then we could substract
+      if (canCook) {
+        for (let j = 0; j < keys.length; j++) {
+          let item = keys[j];
+          inventory[item].count = inventory[item].count - obj[item];
+          if (inventory[item].count === 0) {
+            delete inventory[item];
+          }
+        }
+        updateInventory();
+      }
+    };
+  }
 </script>
