@@ -1,0 +1,47 @@
+<html>
+  <body>
+    <div><input id="input" /></div>
+
+    <button id="resultbutton">result</button>
+    <input id="result" />
+  </body>
+</html>
+
+<!-- <script>//1.calculate 2的N次幂
+  const input = document.getElementById('input');
+  const result = document.getElementById('result');
+  const resultbutton = document.getElementById('resultbutton');
+
+ 
+  resultbutton.onclick = function () {
+    let inputtext = Number(input.value);
+
+    if (inputtext === 0) {
+      result.value = 1;
+    } else {
+      let a = 1;
+
+      for (let i = 0; i < inputtext; i++) {
+        a = a * 2;
+        result.value = a;
+      }
+    }
+  };
+</script> -->
+
+<script>
+  //2.calculate n!
+  const input = document.getElementById('input');
+  const result = document.getElementById('result');
+  const resultbutton = document.getElementById('resultbutton');
+
+  resultbutton.onclick = function () {
+    let x = 1;
+    let inputtext = Number(input.value);
+
+    for (i = inputtext; i >= 1; i--) {
+      x *= i;
+    }
+    result.value = x;
+  };
+</script>

@@ -106,8 +106,27 @@
       }
     });
 
+    function playding() {
+      $('#playstart').remove();
+      $('body').append(
+        '<audio id="ding" src="./sound/microwave_ding.mp3" autoplay />'
+      );
+      setTimeout(function () {
+        $('#ding').remove();
+      }, 1000);
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function playstart() {
+      $('body').append(
+        '<audio id="playstart" src="./sound/microwaving.mp3" autoplay loop />'
+      );
+    }
+
     $('#start').click(function () {
       if (timer === null) {
+        playstart();
         if ($('#screen').text() === '') {
           $('#screen').text(30);
         }
@@ -115,8 +134,7 @@
           let count = Number($('#screen').text());
           $('#screen').text(count - 1);
           if (count < 2) {
-            clearInterval(timer);
-            timer = null;
+            playding();
           }
         }, 1000);
       } else {
@@ -129,8 +147,7 @@
       if (timer === null) {
         $('#screen').text('');
       } else {
-        clearInterval(timer);
-        timer = null;
+        playding();
       }
     });
   });
